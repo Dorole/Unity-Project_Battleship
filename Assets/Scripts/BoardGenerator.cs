@@ -33,7 +33,7 @@ namespace Battleship
 
         private void Start()
         {
-            //GenerateBoard();
+            GenerateBoard();
         }
 
         void GenerateBoard()
