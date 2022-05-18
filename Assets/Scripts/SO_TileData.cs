@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Battleship
 {
-    [CreateAssetMenu (fileName = "TileData", menuName = "Tile Data", order = 51)]
+    [CreateAssetMenu (fileName = "TileData", menuName = "Tile Data", order = 52)]
     public class SO_TileData : ScriptableObject
     {
         [SerializeField] Sprite _defaultSprite;

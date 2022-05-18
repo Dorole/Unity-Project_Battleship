@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51de2209f03bd5f4babd71ac8d9a7c62, type: 3}
+  m_Name: 1x1 Ship
+  m_EditorClassIdentifier: 
+  _shipPrefab: {fileID: 1498266858619417226, guid: 4a9c8a5c06246084794c90f702c7f5ae, type: 3}
+  _placingAssisstant: {fileID: 5838326527055815985, guid: 63e71b225933e6b4084752f69f89044b, type: 3}
+  _amountToPlace: 2
+  _allowedRotations:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}

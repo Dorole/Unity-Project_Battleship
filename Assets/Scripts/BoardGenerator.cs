@@ -12,6 +12,9 @@ namespace Battleship
 
         List<GameObject> _tileList = new List<GameObject>();
 
+        public int BoardSizeX => _boardSizeX;
+        public int BoardSizeZ => _boardSizeZ;
+
         #region GENERATE_IN_EDITOR
         private void OnDrawGizmos()
         {

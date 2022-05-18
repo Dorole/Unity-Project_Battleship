@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f81922ebf4f78449b38e6244cfae830, type: 3}
-  m_Name: RegularTile
+  m_Name: Regular Tile
   m_EditorClassIdentifier: 
   _defaultSprite: {fileID: 21300000, guid: d94db5eda9102774da7d5283eccadd14, type: 3}
   _targetedSprite: {fileID: 21300000, guid: 4c4cb0192650d5946ab08fd344a8126f, type: 3}
