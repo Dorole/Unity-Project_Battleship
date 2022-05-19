@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51de2209f03bd5f4babd71ac8d9a7c62, type: 3}
   m_Name: 4x1 Ship
   m_EditorClassIdentifier: 
-  _shipPrefab: {fileID: 6831975439523013195, guid: 2f6dc45752cdb6c488bccbf81a6af2ff, type: 3}
+  _shipPrefab: {fileID: 909279187527181235, guid: 73c4ee695ed72594d9c70206f74c81fa, type: 3}
   _placingAssisstant: {fileID: 1912611843540880815, guid: 0715b7f1151e17b4d8fadb55d173fcff, type: 3}
   _amountToPlace: 1
   _allowedRotations:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: 180, z: 0}
+  - {x: 0, y: 270, z: 0}

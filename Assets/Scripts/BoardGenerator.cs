@@ -49,9 +49,18 @@ namespace Battleship
                     GameObject tile = Instantiate(_tilePrefab, tilePos, Quaternion.identity, transform);
                     tile.name = $"Tile: x {i}, z {j}";
 
+                    Tile tileInfo = tile.GetComponent<Tile>();
+                    SetTileCoordinates(tileInfo, i, j);
+
                     _tileList.Add(tile); 
                 }
             }
+        }
+
+        void SetTileCoordinates(Tile t, int xPos, int yPos)
+        {
+            t.XPos = xPos;
+            t.ZPos = yPos;
         }
     }
 }
