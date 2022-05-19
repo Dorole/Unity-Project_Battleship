@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7502287223231250581}
   - component: {fileID: 4364458787578429446}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: PlacingAssisstant_Individual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

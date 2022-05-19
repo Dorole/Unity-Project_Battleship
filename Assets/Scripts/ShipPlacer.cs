@@ -8,13 +8,18 @@ namespace Battleship
     {
         [SerializeField] GameObject _board;
         [SerializeField] List<Ship> _shipsToPlace = new List<Ship>();
+
+        [Header("Parent objects")][SerializeField] Transform _shipsParent;
+        [SerializeField] Transform _noGoZonesParent;
+        [SerializeField] Transform _placingAssisstantsParent;
+
         int _currentShip;
         SO_ShipData _currentShipData;
         int _xRange;
         int _zRange;
         List<GameObject> _spawnedShips = new List<GameObject>(); //DEBUG
 
-        TileInfo[,] _tempGrid = new TileInfo[10, 10];
+        TileInfo[,] _tempGrid = new TileInfo[10, 10]; //TEMP
 
         private void Start()
         {
@@ -79,7 +84,7 @@ namespace Battleship
         //temporarily public
         public void PlaceShips() //REFACTOR!
         {
-            ClearAllShips();
+            //ClearBoard();
 
             bool posFound = false;
 
@@ -102,6 +107,7 @@ namespace Battleship
                         int zPos = Random.Range(0, _zRange);
 
                         GameObject pa = Instantiate(_currentShipData.PlacingAssisstant);
+                        pa.transform.parent = _placingAssisstantsParent;
                         pa.transform.position = new Vector3(_board.transform.position.x + xPos, 1f, _board.transform.position.z + zPos);
 
                         for (int r = 0; r < _currentShipData.AllowedRotations.Length; r++)
@@ -124,6 +130,9 @@ namespace Battleship
                                 allowedRotationsList.Remove(randomRotation);
                         }
                     }
+
+                    //check if PA parent child count is 0 and destroy any remaining PAs
+                    //deactivate no-go zones until ship is destroyed
                 }
             }
         }
@@ -147,7 +156,13 @@ namespace Battleship
 
             GameObject newShip = Instantiate(_currentShipData.ShipPrefab,
                                             pos,
-                                            assisstant.transform.rotation);
+                                            assisstant.transform.rotation,
+                                            _shipsParent);
+
+            GameObject noGoZone = Instantiate(_currentShipData.NoGoZone,
+                                              pos,
+                                              assisstant.transform.rotation,
+                                              _noGoZonesParent); //find a way to connect them to their respective ships though - dictionary?
 
             //UpdateGrid(assisstant.transform, newShip.GetComponent<Ship>());
             _spawnedShips.Add(newShip);
@@ -156,15 +171,22 @@ namespace Battleship
             Destroy(assisstant);
         }
 
-        void ClearAllShips()
+        public void ClearBoard()
         {
             if (_spawnedShips.Count == 0)
                 return;
 
             foreach (var ship in _spawnedShips)
-            {
                 Destroy(ship);
-            }
+
+            _spawnedShips.Clear();
+
+            foreach (Transform child in _noGoZonesParent)
+                Destroy(child.gameObject);
+
+            foreach (Transform child in _placingAssisstantsParent)
+                Destroy(child.gameObject);
+
         }
 
         void ResetGrid()
@@ -179,19 +201,31 @@ namespace Battleship
             }
         }
 
-        void UpdateGrid(Transform shipTransform, Ship ship)
+        void FindNeighbourTiles(Transform assisstant)
         {
-            foreach (Transform child in shipTransform)
+            foreach (Transform child in assisstant)
             {
-                Tile tile = child.GetComponent<PlacingAssisstant>().GetTile();
-                _tempGrid[tile.XPos, tile.ZPos] = new TileInfo(TileOccupationType.SHIP, ship);
+                PlacingAssisstant pa = child.GetComponent<PlacingAssisstant>();
+                Tile potentialPlacingTile = pa.GetTile();
+
+
             }
         }
 
-        public bool CheckIfOccupied(int xPos, int zPos)
-        {
-            return _tempGrid[xPos, zPos].IsOccupied();
-        }
+        #region CURRENTLY UNUSED
+        //void UpdateGrid(Transform shipTransform, Ship ship)
+        //{
+        //    foreach (Transform child in shipTransform)
+        //    {
+        //        Tile tile = child.GetComponent<PlacingAssisstant>().GetTile();
+        //        _tempGrid[tile.XPos, tile.ZPos] = new TileInfo(TileOccupationType.SHIP, ship);
+        //    }
+        //}
 
+        //public bool CheckIfOccupied(int xPos, int zPos) //NOT NEEDED ANYMORE
+        //{
+        //    return _tempGrid[xPos, zPos].IsOccupied();
+        //}
+        #endregion
     }
 }

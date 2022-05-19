@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 2x1 Ship
   m_EditorClassIdentifier: 
   _shipPrefab: {fileID: 5832460274132576284, guid: d676cf936416fff42b9a3f7984e69558, type: 3}
+  _shipLength: 2
   _placingAssisstant: {fileID: 5092055674214642998, guid: 98a3ec862b876dc43aa1551eaec0de81, type: 3}
+  _noGoZone: {fileID: 7188486038679207573, guid: 06c06f819b6406246b910b7229f51877, type: 3}
   _amountToPlace: 2
   _allowedRotations:
   - {x: 0, y: 0, z: 0}

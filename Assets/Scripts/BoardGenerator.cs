@@ -20,17 +20,8 @@ namespace Battleship
         {
             if (_tilePrefab != null && _generateInEditor)
             {
-                DeleteExistingTiles();
                 GenerateBoard();
             }
-        }
-
-        void DeleteExistingTiles()
-        {
-            for (int i = 0; i < _tileList.Count; i++)
-                DestroyImmediate(_tileList[i]);
-
-            _tileList.Clear();
         }
         #endregion
 
