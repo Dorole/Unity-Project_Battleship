@@ -414,13 +414,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4640163750154328928}
+  - component: {fileID: -2081916481094013935}
   m_Layer: 0
   m_Name: 4x1 NoGoZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4640163750154328928
 Transform:
   m_ObjectHideFlags: 0
@@ -450,6 +451,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2081916481094013935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093675374868496215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1c91a7ece66f643824e7d7b05ca7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6239378342246232736
 GameObject:
   m_ObjectHideFlags: 0

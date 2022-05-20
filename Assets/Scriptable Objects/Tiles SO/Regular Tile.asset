@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultSprite: {fileID: 21300000, guid: d94db5eda9102774da7d5283eccadd14, type: 3}
   _targetedSprite: {fileID: 21300000, guid: 4c4cb0192650d5946ab08fd344a8126f, type: 3}
+  _defaultMaterial: {fileID: 2100000, guid: f96ed87d6c9d97346b320a006dd3b59d, type: 2}
+  _missedMaterial: {fileID: 2100000, guid: c0f8f48c76fb5eb41a2854aa95ba505c, type: 2}
+  _hitMaterial: {fileID: 2100000, guid: 7872071727a62ea4db8583f2824fa31b, type: 2}

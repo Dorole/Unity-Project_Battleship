@@ -197,3 +197,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tileData: {fileID: 11400000, guid: 47856a5615a19ae46af1b9071cafe4a7, type: 2}
   _sprite: {fileID: 8290900391052119292}
+  _mesh: {fileID: 2774027794552583250}
+  _ship: {fileID: 0}

@@ -12,7 +12,6 @@ namespace Battleship
         [SerializeField] GameObject _placingAssisstant;
         [SerializeField] GameObject _noGoZone;
         [SerializeField] int _amountToPlace = 1;
-        //int _placedAmount = 0;
         [SerializeField] Vector3[] _allowedRotations =
             { Vector3.zero,
               new Vector3 (0, 90, 0),
@@ -22,10 +21,10 @@ namespace Battleship
 
 
         public GameObject ShipPrefab => _shipPrefab;
+        public int ShipLength => _shipLength;
         public GameObject PlacingAssisstant => _placingAssisstant;
         public GameObject NoGoZone => _noGoZone;
         public int AmountToPlace => _amountToPlace;
         public Vector3[] AllowedRotations => _allowedRotations;
-
     }
 }
