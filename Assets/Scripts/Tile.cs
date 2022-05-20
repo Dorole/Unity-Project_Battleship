@@ -63,16 +63,17 @@ namespace Battleship
             _tileChecked = true;
         }    
 
-        void ResetTile() //FOR TESTING
-        {
-            _mesh.material = _tileData.DefaultMaterial;
-            GetComponent<BoxCollider>().enabled = true;
-        }
-
         public void MarkEmptyTile()
         {
             _mesh.material = _tileData.MissedMaterial;
             _tileChecked = true;
         }
+        
+        void ResetTile() //FOR TESTING
+        {
+            _mesh.material = _tileData.DefaultMaterial;
+            _tileChecked = false;
+        }
+
     }
 }

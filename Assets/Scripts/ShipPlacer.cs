@@ -9,16 +9,16 @@ namespace Battleship
         public static event Action OnAllShipsPlaced;
         public static event Action OnBoardReset; //FOR TESTING
 
-        [SerializeField] GameObject _board;
+        [SerializeField] GameObject[] _boards;
         [SerializeField] List<Ship> _shipsToPlace = new List<Ship>();
 
         [Header("Parent objects")][SerializeField] Transform _shipsParent;
         [SerializeField] Transform _noGoZonesParent;
         [SerializeField] Transform _placingAssisstantsParent;
 
-        int _xBoardRange;
-        int _zBoardRange;
+        [SerializeField] int _xBoardRange, _zBoardRange;
 
+        int _currentBoard;
         SO_ShipData _currentShipData;
         int _currentShip;
         int _sameShipPlaced;
@@ -29,14 +29,17 @@ namespace Battleship
         public List<GameObject> SpawnedShips => _spawnedShips;
         public Dictionary<GameObject, GameObject> ShipDictionary => _shipDictionary;
 
-        private void Start()
+        //public for testing
+        public void SetUpBoards()
         {
-            _xBoardRange = _board.GetComponent<BoardGenerator>().BoardSizeX;
-            _zBoardRange = _board.GetComponent<BoardGenerator>().BoardSizeZ;
+            for (int i = 0; i < _boards.Length; i++)
+            {
+                _currentBoard = i;
+                PlaceShips();
+            }
         }
 
-        //public for testing
-        public void PlaceShips() 
+        void PlaceShips() 
         {
             for (int i = 0; i < _shipsToPlace.Count; i++) 
             {
@@ -54,6 +57,7 @@ namespace Battleship
                 }
             }
 
+            CheckForRemainingAssisstants();
             OnAllShipsPlaced?.Invoke();
         }
         
@@ -64,7 +68,7 @@ namespace Battleship
 
             GameObject pa = Instantiate(_currentShipData.PlacingAssisstant);
             pa.transform.parent = _placingAssisstantsParent;
-            pa.transform.position = new Vector3(_board.transform.position.x + xPos, 1f, _board.transform.position.z + zPos);
+            pa.transform.position = new Vector3(_boards[_currentBoard].transform.position.x + xPos, 1f, _boards[_currentBoard].transform.position.z + zPos);
             return pa;
         }
         
@@ -153,23 +157,35 @@ namespace Battleship
             }
         }
 
+        void CheckForRemainingAssisstants()
+        {
+            if (_placingAssisstantsParent.childCount == 0)
+                return;
+
+            foreach (Transform child in _placingAssisstantsParent)
+                Destroy(child.gameObject); //SET INACTIVE
+        }
+
         //public for testing
         public void ClearBoard()
         {
             if (_spawnedShips.Count == 0)
                 return;
 
-            foreach (var ship in _spawnedShips)
-                Destroy(ship);
+            foreach (var board in _boards)
+            {
+                foreach (var ship in _spawnedShips)
+                    Destroy(ship);
 
-            foreach (Transform child in _noGoZonesParent)
-                Destroy(child.gameObject);
+                foreach (Transform child in _noGoZonesParent)
+                    Destroy(child.gameObject);
 
-            foreach (Transform child in _placingAssisstantsParent)
-                Destroy(child.gameObject);
+                foreach (Transform child in _placingAssisstantsParent)
+                    Destroy(child.gameObject);
 
-            _spawnedShips.Clear();
-            _shipDictionary.Clear();
+                _spawnedShips.Clear();
+                _shipDictionary.Clear();
+            }
 
             OnBoardReset?.Invoke();
         }

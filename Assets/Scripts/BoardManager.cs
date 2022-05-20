@@ -6,11 +6,10 @@ namespace Battleship
 {
     public class BoardManager : MonoBehaviour
     {
-        ShipPlacer _shipPlacer;
+        [SerializeField] ShipPlacer _shipPlacer;
 
         private void Start()
         {
-            _shipPlacer = FindObjectOfType<ShipPlacer>();
             //ShipPlacer.OnAllShipsPlaced += HideShips;
         }
 
