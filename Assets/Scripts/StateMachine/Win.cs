@@ -12,7 +12,7 @@ namespace Battleship
         public override IEnumerator Start()
         {
             Debug.Log($"Player {GameManager.CurrentPlayer + 1} won!");
-
+            GameManager.UI.SetPlayersTextOpacity(GameManager.CurrentPlayer, 1, GameManager.CurrentOpponent, 1);
             //prikazi sve brodove
             //win screen ili samo promijeni tekst iznad ploce
             //buttons: PLAY AGAIN, MAIN MENU, QUIT

@@ -24,6 +24,8 @@ namespace Battleship
 
         public override IEnumerator Start()
         {
+            GameManager.UI.SetPlayersTextOpacity(_currentPlayer, 1, _opponent, 0.5f);
+
             yield return new WaitForSeconds(1f);
            
             _currentPlayerBoardManager.ToggleBoardLayer(_currentPlayerBoardManager.LayerIgnoreRaycast);
