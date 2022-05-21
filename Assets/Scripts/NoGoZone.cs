@@ -27,13 +27,14 @@ namespace Battleship
 
             foreach (Transform child in transform)
             {
+                child.gameObject.SetActive(true);
+
                 Ray ray = new Ray(child.position, Vector3.down);
 
                 if (Physics.Raycast(ray, out hit, 10f))
                 {
                     if (hit.collider.gameObject.GetComponent<Tile>())
                         hit.collider.GetComponent<Tile>().MarkEmptyTile();
-
                 }
             }
 

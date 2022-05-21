@@ -9,6 +9,8 @@ namespace Battleship
         public static event Action OnAllShipsPlaced;
         public static event Action OnBoardReset; //FOR TESTING
 
+        #region FIELDS AND PROPERTIES
+
         [SerializeField] GameObject[] _boards;
         [SerializeField] List<Ship> _shipsToPlace = new List<Ship>();
 
@@ -29,6 +31,15 @@ namespace Battleship
         public List<GameObject> SpawnedShips => _spawnedShips;
         public Dictionary<GameObject, GameObject> ShipDictionary => _shipDictionary;
 
+        GameManager _gameManager;
+
+        #endregion
+
+        private void Start()
+        {
+            _gameManager = FindObjectOfType<GameManager>();
+        }
+
         //public for testing
         public void SetUpBoards()
         {
@@ -37,6 +48,9 @@ namespace Battleship
                 _currentBoard = i;
                 PlaceShips();
             }
+
+            //TESTING
+            GameManager.Instance.SetState(new PlayerTurn(GameManager.Instance));
         }
 
         void PlaceShips() 
@@ -122,7 +136,7 @@ namespace Battleship
             _spawnedShips.Add(newShip);
             _shipDictionary.Add(newShip, noGoZone);
 
-            //GameManager.Instance.AddShipToActivePlayerList(newShip);
+            _gameManager.AddShipToPlayerList(_currentBoard, newShip);
             newShip.GetComponent<Ship>().AssignShipID(_spawnedShips.IndexOf(newShip) + 1);
             AssignShipToTile(newShip);
 

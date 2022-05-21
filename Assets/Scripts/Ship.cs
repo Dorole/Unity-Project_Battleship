@@ -12,10 +12,12 @@ namespace Battleship
         GameObject _noGoZone;
         int _shipID;
         int _hits;
+        bool _isDestroyed;
 
         public SO_ShipData ShipData => _shipData;
         public int ShipID => _shipID;
         public GameObject Zone => _noGoZone;
+        public bool ShipDestroyed => _isDestroyed;
 
         private void Start()
         {
@@ -49,6 +51,7 @@ namespace Battleship
             {
                 Debug.Log($"Ship {_shipID} destroyed!");
                 OnShipDestroyed?.Invoke(_shipID);
+                _isDestroyed = true;
 
                 //ANIMATION/PARTICLES FOR FIRE
 

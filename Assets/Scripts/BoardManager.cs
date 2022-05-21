@@ -8,18 +8,21 @@ namespace Battleship
     {
         [SerializeField] ShipPlacer _shipPlacer;
 
+        int _layerIgnoreRaycast;
+        int _layerGameBoard;
+
+        public int LayerIgnoreRaycast => _layerIgnoreRaycast;
+        public int LayerGameBoard => _layerGameBoard;
+
         private void Start()
         {
-            //ShipPlacer.OnAllShipsPlaced += HideShips;
+            ShipPlacer.OnAllShipsPlaced += HideShipsAndZones;
+
+            _layerIgnoreRaycast = LayerMask.NameToLayer("Ignore Raycast");
+            _layerGameBoard = LayerMask.NameToLayer("GameBoard");
         }
 
-        private void Update() //TESTING
-        {
-            if (Input.GetKey(KeyCode.H))
-                HideShips();
-        }
-
-        void HideShips()
+        void HideShipsAndZones()
         {
             List<GameObject> spawnedShips = _shipPlacer.SpawnedShips;
             Dictionary<GameObject, GameObject> shipsAndZones = _shipPlacer.ShipDictionary;
@@ -31,8 +34,19 @@ namespace Battleship
 
                 GameObject zone;
                 shipsAndZones.TryGetValue(ship, out zone);
-                zone.SetActive(false);
+
+                foreach (Transform child in zone.transform)
+                    child.gameObject.SetActive(false);
             }
         }
+
+        public void ToggleBoardLayer(int layer)
+        {
+            Transform board = gameObject.transform;
+
+            foreach (Transform child in board)
+                child.gameObject.layer = layer;
+        }
+
     }
 }

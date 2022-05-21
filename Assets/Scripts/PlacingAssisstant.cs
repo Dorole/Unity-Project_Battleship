@@ -6,7 +6,6 @@ namespace Battleship
 {
     public class PlacingAssisstant : MonoBehaviour
     {
-        [SerializeField] LayerMask _layerToCheck;
         RaycastHit _hit;
         Tile _tile;
         GameObject _board; //NOT NEEDED?

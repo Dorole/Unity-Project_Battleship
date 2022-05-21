@@ -58,9 +58,13 @@ namespace Battleship
                 OnTileHit?.Invoke(_tileID);
             }
             else
+            {
                 _mesh.material = _tileData.MissedMaterial;
+                GameManager.Instance.TurnEnded = true;
+            }
 
             _tileChecked = true;
+            
         }    
 
         public void MarkEmptyTile()
