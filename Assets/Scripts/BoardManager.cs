@@ -14,10 +14,13 @@ namespace Battleship
         public int LayerIgnoreRaycast => _layerIgnoreRaycast;
         public int LayerGameBoard => _layerGameBoard;
 
-        private void Start()
+        private void OnEnable()
         {
             ShipPlacer.OnAllShipsPlaced += HideShipsAndZones;
+        }
 
+        private void Start()
+        {
             _layerIgnoreRaycast = LayerMask.NameToLayer("Ignore Raycast");
             _layerGameBoard = LayerMask.NameToLayer("GameBoard");
         }
@@ -46,6 +49,19 @@ namespace Battleship
 
             foreach (Transform child in board)
                 child.gameObject.layer = layer;
+        }
+
+        public void DisableClickingTiles()
+        {
+            Transform board = gameObject.transform;
+
+            foreach (Transform child in board)
+                child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
+
+        private void OnDisable()
+        {
+            ShipPlacer.OnAllShipsPlaced -= HideShipsAndZones;
         }
 
     }

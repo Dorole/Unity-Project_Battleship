@@ -31,16 +31,8 @@ namespace Battleship
         public List<GameObject> SpawnedShips => _spawnedShips;
         public Dictionary<GameObject, GameObject> ShipDictionary => _shipDictionary;
 
-        GameManager _gameManager;
-
         #endregion
 
-        private void Start()
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-        }
-
-        //public for testing
         public void SetUpBoards()
         {
             for (int i = 0; i < _boards.Length; i++)
@@ -49,8 +41,7 @@ namespace Battleship
                 PlaceShips();
             }
 
-            //TESTING
-            GameManager.Instance.SetState(new PlayerTurn(GameManager.Instance));
+            OnAllShipsPlaced?.Invoke();
         }
 
         void PlaceShips() 
@@ -72,7 +63,6 @@ namespace Battleship
             }
 
             CheckForRemainingAssisstants();
-            OnAllShipsPlaced?.Invoke();
         }
         
         GameObject InstantiatePlacingAssisstant()
@@ -136,7 +126,7 @@ namespace Battleship
             _spawnedShips.Add(newShip);
             _shipDictionary.Add(newShip, noGoZone);
 
-            _gameManager.AddShipToPlayerList(_currentBoard, newShip);
+            GameFlowSystem.Instance.AddShipToPlayerList(_currentBoard, newShip);
             newShip.GetComponent<Ship>().AssignShipID(_spawnedShips.IndexOf(newShip) + 1);
             AssignShipToTile(newShip);
 

@@ -5,7 +5,7 @@ namespace Battleship
 {
     internal class Prepare : State
     {
-        public Prepare(GameManager gameManager) : base(gameManager)
+        public Prepare(GameFlowSystem gameManager) : base(gameManager)
         {
         }
 
@@ -13,9 +13,11 @@ namespace Battleship
         {
             Debug.Log("Next player prepare!");
             GameManager.SwitchPlayer();
-            GameManager.UI.SetPlayerText(GameManager.CurrentPlayer + 1);
+            GameManager.UI.SetPlayerText(GameManager.CurrentPlayer);
             GameManager.UI.TogglePanel();
             yield break;
         }
+
+
     }
 }

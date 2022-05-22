@@ -8,11 +8,11 @@ namespace Battleship
         int _currentPlayer;
         GameObject _currentPlayerBoard;
         BoardManager _currentPlayerBoardManager;
-        
+
         int _opponent;
         BoardManager _opponentBoardManager;
 
-        public PlayerTurn(GameManager gameManager) : base(gameManager)
+        public PlayerTurn(GameFlowSystem gameManager) : base(gameManager)
         {
             _currentPlayer = GameManager.CurrentPlayer;
             _currentPlayerBoard = GameManager.Players[_currentPlayer].PlayerBoard;
@@ -26,15 +26,15 @@ namespace Battleship
         {
             GameManager.UI.SetPlayersTextOpacity(_currentPlayer, 1, _opponent, 0.5f);
 
-            yield return new WaitForSeconds(1f);
-           
             _currentPlayerBoardManager.ToggleBoardLayer(_currentPlayerBoardManager.LayerIgnoreRaycast);
-           _opponentBoardManager.ToggleBoardLayer(_opponentBoardManager.LayerGameBoard); 
-            
-            Debug.Log($"Player {_currentPlayer} TURN STARTED. OPPONENT: PLAYER {_opponent}");
-            //change camera
+            _opponentBoardManager.ToggleBoardLayer(_opponentBoardManager.LayerGameBoard);
 
             DisplayCurrentPlayersShips();
+            ZoomShips(true);
+            ZoomBoard(true);
+            yield return new WaitForSeconds(1f);
+
+            Debug.Log($"Player {_currentPlayer} TURN STARTED. OPPONENT: PLAYER {_opponent}");
             GameManager.MoveToNextStage(TakeTurn());
         }
 
@@ -48,19 +48,22 @@ namespace Battleship
 
         public override IEnumerator Exit()
         {
+            _opponentBoardManager.ToggleBoardLayer(_opponentBoardManager.LayerIgnoreRaycast);
+            ZoomBoard(false);
+            ZoomShips(false);
+            
+            yield return new WaitForSeconds(1f);
+
+            HideUndestroyedShips();
+
             if (WinCheck())
             {
                 GameManager.SetState(new Win(GameManager));
                 yield break;
             }
-            
+
             Debug.Log("PLAYER SWITCH");
-            HideUndestroyedShips();
-            _opponentBoardManager.ToggleBoardLayer(_opponentBoardManager.LayerIgnoreRaycast);
-            yield return new WaitForSeconds(1f);
-
             GameManager.SetState(new Prepare(GameManager));
-
         }
 
         void HideUndestroyedShips()
@@ -79,8 +82,8 @@ namespace Battleship
         {
             foreach (GameObject ship in GameManager.Players[_currentPlayer].PlacedShipsList)
             {
-                 foreach (Transform child in ship.transform)
-                        child.gameObject.SetActive(true);
+                foreach (Transform child in ship.transform)
+                    child.gameObject.SetActive(true);
             }
         }
 
@@ -95,6 +98,17 @@ namespace Battleship
             }
 
             return true;
+        }
+
+        void ZoomBoard(bool zoomIn)
+        {
+            _currentPlayerBoard.GetComponent<ObjectZoomer>().ZoomOverTime(_currentPlayerBoard.transform, zoomIn);
+        }
+
+        void ZoomShips(bool zoomIn)
+        {
+            foreach (GameObject ship in GameManager.Players[_currentPlayer].PlacedShipsList)
+                ship.GetComponent<ObjectZoomer>().ZoomOverTime(ship.transform, zoomIn); 
         }
     }
 }

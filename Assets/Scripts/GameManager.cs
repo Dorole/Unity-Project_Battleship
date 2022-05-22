@@ -4,59 +4,50 @@ using UnityEngine;
 
 namespace Battleship
 {
-    public class GameManager : StateMachine
+    public class GameManager : MonoBehaviour
     {
-        #region FIELDS AND CONSTRUCTORS
-        public static GameManager Instance;
-        public bool TurnEnded;
-        int _currentPlayer = 0;
-        int _currentOpponent = 1; 
-        
-        [SerializeField] Player[] _players = new Player[2];
-        [SerializeField] GameUI _ui;
-                
-        public Player[] Players => _players;
-        public int CurrentPlayer => _currentPlayer;
-        public int CurrentOpponent => _currentOpponent;
-        public GameUI UI => _ui;
-#endregion
-        
+        [SerializeField] GameObject[] _boards;
+        BoardGenerator _boardGenerator;
+        BoardManager _boardManager;
+
+        [SerializeField] ShipPlacer _shipPlacer;
+        [SerializeField] GameUI _gameUI;
+
         private void Awake()
         {
-            Instance = this;
+            if (!_shipPlacer)
+                _shipPlacer = FindObjectOfType<ShipPlacer>();
         }
 
         private void Start()
         {
-            // potencijalno prvo introduction state - panel gdje pise koji je player prvi i kratka uputa, mozda 3 sekunde countdown?
-            //SetState(new PlayerTurn(this));
+            SetupGame();
         }
 
-        public void AddShipToPlayerList(int currentBoard, GameObject ship)
+        void SetupGame()
         {
-            _players[currentBoard].PlacedShipsList.Add(ship);
+            foreach (GameObject board in _boards)
+            {
+                _boardGenerator = board.GetComponent<BoardGenerator>();
+                _boardGenerator.GenerateBoard();
+            }
+
+            _shipPlacer.SetUpBoards();
+
+            foreach (GameObject board in _boards)
+            {
+                _boardManager = board.GetComponent<BoardManager>();
+                _boardManager.DisableClickingTiles();
+            }
+
+            StartCoroutine(RevealScreen());
         }
 
-        public void OnPlayerReadyButton() 
+        IEnumerator RevealScreen()
         {
-            TurnEnded = false;
-            _ui.TogglePanel();
-            SetState(new PlayerTurn(this));
+            yield return new WaitForSeconds(2);
+
+            _gameUI.FadeImage();
         }
-
-        public void SwitchPlayer()
-        {
-            _currentOpponent = _currentPlayer;
-
-            _currentPlayer++;
-            _currentPlayer %= 2;
-            Debug.Log($"Switched to player {_currentPlayer}. Opponent {_currentOpponent}.");
-        }
-
-        public void MoveToNextStage(IEnumerator stage)
-        {
-            StartCoroutine(stage);
-        }
-
     }
 }

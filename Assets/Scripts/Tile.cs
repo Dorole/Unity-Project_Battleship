@@ -60,7 +60,7 @@ namespace Battleship
             else
             {
                 _mesh.material = _tileData.MissedMaterial;
-                GameManager.Instance.TurnEnded = true;
+                GameFlowSystem.Instance.TurnEnded = true;
             }
 
             _tileChecked = true;

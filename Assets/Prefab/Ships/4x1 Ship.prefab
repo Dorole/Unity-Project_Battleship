@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 414762440591021010}
   - component: {fileID: 9097114857695571596}
+  - component: {fileID: 4107673648425957419}
   m_Layer: 0
   m_Name: 4x1 Ship
   m_TagString: Untagged
@@ -49,6 +50,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipData: {fileID: 11400000, guid: c0325b33559015640827127e753c417e, type: 2}
+--- !u!114 &4107673648425957419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909279187527181235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c927b24fbdda840bb6a5bfefc319dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zoomDifference: 1.5
+  _duration: 1
 --- !u!1 &3829621265311033193
 GameObject:
   m_ObjectHideFlags: 0

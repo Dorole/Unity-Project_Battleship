@@ -7,9 +7,9 @@ namespace Battleship
     public abstract class State 
     {
       
-        protected GameManager GameManager;
+        protected GameFlowSystem GameManager;
 
-        public State(GameManager gameManager)
+        public State(GameFlowSystem gameManager)
         {
             GameManager = gameManager;
         }

@@ -25,12 +25,7 @@ namespace Battleship
         }
         #endregion
 
-        private void Start()
-        {
-            GenerateBoard();
-        }
-
-        void GenerateBoard()
+        public void GenerateBoard()
         {
             for (int i = 0; i < _boardSizeX; i++)
             {

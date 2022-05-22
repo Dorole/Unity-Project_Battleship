@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7788911178831741875}
   - component: {fileID: 8755556885462484157}
+  - component: {fileID: 5805818149263052901}
   m_Layer: 0
   m_Name: 2x1 Ship
   m_TagString: Untagged
@@ -144,6 +145,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipData: {fileID: 11400000, guid: 2dc22585e6e1cb742a8a20ae3d971e5f, type: 2}
+--- !u!114 &5805818149263052901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832460274132576284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c927b24fbdda840bb6a5bfefc319dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zoomDifference: 1.5
+  _duration: 1
 --- !u!1 &7086945650853473318
 GameObject:
   m_ObjectHideFlags: 0
