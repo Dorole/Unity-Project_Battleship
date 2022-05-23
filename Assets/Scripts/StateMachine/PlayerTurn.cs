@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Battleship
 {
     internal class PlayerTurn : State
     {
+        public static event Action OnWin;
+
         int _currentPlayer;
         GameObject _currentPlayerBoard;
         BoardManager _currentPlayerBoardManager;
@@ -34,7 +37,6 @@ namespace Battleship
             ZoomBoard(true);
             yield return new WaitForSeconds(1f);
 
-            Debug.Log($"Player {_currentPlayer} TURN STARTED. OPPONENT: PLAYER {_opponent}");
             GameManager.MoveToNextStage(TakeTurn());
         }
 
@@ -42,7 +44,6 @@ namespace Battleship
         {
             yield return new WaitUntil(() => GameManager.TurnEnded || WinCheck());
 
-            Debug.Log("TURN OVER. CHECK FOR WIN OR SWITCH");
             GameManager.MoveToNextStage(Exit());
         }
 
@@ -58,11 +59,13 @@ namespace Battleship
 
             if (WinCheck())
             {
+                OnWin?.Invoke();
+
+                yield return new WaitForSeconds(1f);
                 GameManager.SetState(new Win(GameManager));
                 yield break;
             }
 
-            Debug.Log("PLAYER SWITCH");
             GameManager.SetState(new Prepare(GameManager));
         }
 

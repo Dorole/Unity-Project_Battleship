@@ -11,7 +11,6 @@ namespace Battleship
 
         public override IEnumerator Start()
         {
-            Debug.Log("Next player prepare!");
             GameManager.SwitchPlayer();
             GameManager.UI.SetPlayerText(GameManager.CurrentPlayer);
             GameManager.UI.TogglePanel();
