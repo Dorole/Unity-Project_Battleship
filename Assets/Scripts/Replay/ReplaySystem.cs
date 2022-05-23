@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,25 +6,91 @@ namespace Battleship
 {
     public class ReplaySystem : MonoBehaviour
     {
-        public static event Action OnReplayStarted;
-
-        List<Vector3> _playedTileCoordinates = new List<Vector3>();
+        public int MoveInterval = 1;
+        List<Tile> _playedTiles = new List<Tile>();
+        Coroutine _replayCoroutine;
         bool _replayStarted;
+        bool _autoReplay;
+        int _currentReplayIndex;
 
-        public void AddToTileList(Vector3 pos)
+        public List<Tile> PlayedTiles => _playedTiles;
+
+        public void AddToTileList(Tile tile)
         {
             if (!_replayStarted)
-                _playedTileCoordinates.Add(pos);
+                _playedTiles.Add(tile);
         }
 
-        public void StartReplay() //button
+        public void StartReplay() 
         {
-            //should somehow disable then enable tiles, ships and ngzones - who? BoardManager?
             _replayStarted = true;
-            OnReplayStarted?.Invoke();
-            //UPDATE OVDJE ILI KORUTINA NEW STATE?
-            //DODAJ GUMBICE ZA STOP, CONTINUE I STRELICU ZA MOVE BY MOVE
-            //RAYCAST MORA BITI UKLJUCEN ZBOG ZONA, DODAJ NEKI BLOCK ZA PLAYERA :-/
+            _currentReplayIndex = 0;
+            GameFlowSystem.Instance.SetState(new Replay(GameFlowSystem.Instance));
+        }
+
+        public void ReplayTileActions()
+        {
+            _autoReplay = true;
+            _replayCoroutine = StartCoroutine(CO_ReplayTileActions());
+        }
+
+        public void AutoPlay()
+        {
+            if (CheckForReplayFinished())
+                return;
+
+            _replayCoroutine = StartCoroutine(CO_ReplayTileActions());
+        }
+
+        public void StopAutoPlay()
+        {
+            CheckForCoroutine();
+        }
+
+        public void GoForward()
+        {
+            if (CheckForReplayFinished())
+                return;
+
+            CheckForCoroutine();
+            _playedTiles[_currentReplayIndex].ReplayTile();
+            _currentReplayIndex++;
+        }
+
+        public void GoBack()
+        {
+            if (CheckForReplayFinished() || _currentReplayIndex <= 0)
+                return;
+
+            CheckForCoroutine();
+            _currentReplayIndex--;
+            _playedTiles[_currentReplayIndex].UndoTile();
+        }
+
+        IEnumerator CO_ReplayTileActions()
+        {
+            _autoReplay = true;
+
+            for (int i = _currentReplayIndex; i < _playedTiles.Count; i++)
+            {
+                _playedTiles[i].ReplayTile();
+                _currentReplayIndex++;
+                yield return new WaitForSeconds(MoveInterval);
+            }
+        }
+
+        void CheckForCoroutine()
+        {
+            if (_autoReplay)
+            {
+                StopCoroutine(_replayCoroutine);
+                _autoReplay = false;
+            }
+        }
+
+        public bool CheckForReplayFinished()
+        {
+            return _currentReplayIndex == _playedTiles.Count;
         }
     }
 }

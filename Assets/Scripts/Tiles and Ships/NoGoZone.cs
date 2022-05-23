@@ -9,6 +9,7 @@ namespace Battleship
         private void OnEnable()
         {
             Ship.OnShipDestroyed += MarkZone;
+            Ship.OnShipUndone += UnmarkZone;
         }
 
         public void SetZoneID(int id)
@@ -36,12 +37,38 @@ namespace Battleship
                 }
             }
 
-            gameObject.SetActive(false);
+            foreach (Transform child in transform)
+                child.gameObject.SetActive(false);
+        }
+
+        void UnmarkZone(int id)
+        {
+            if (_zoneID != id)
+                return;
+
+            RaycastHit hit;
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+
+                Ray ray = new Ray(child.position, Vector3.down);
+
+                if (Physics.Raycast(ray, out hit, 10f))
+                {
+                    if (hit.collider.gameObject.GetComponent<Tile>())
+                        hit.collider.GetComponent<Tile>().UnmarkTile();
+                }
+            }
+
+            foreach (Transform child in transform)
+                child.gameObject.SetActive(false);
         }
 
         private void OnDisable()
         {
             Ship.OnShipDestroyed -= MarkZone;
+            Ship.OnShipUndone -= UnmarkZone;
         }
     }
 }

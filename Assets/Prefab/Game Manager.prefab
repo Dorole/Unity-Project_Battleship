@@ -52,6 +52,7 @@ MonoBehaviour:
   - PlacedShipsList: []
     _myBoard: {fileID: 0}
   _ui: {fileID: 0}
+  _replaySystem: {fileID: 0}
 --- !u!114 &9111771670433861831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,3 +70,4 @@ MonoBehaviour:
   - {fileID: 0}
   _shipPlacer: {fileID: 0}
   _gameUI: {fileID: 0}
+  _clickBlocker: {fileID: 0}

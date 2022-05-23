@@ -6,7 +6,9 @@ namespace Battleship
 {
     public class Ship : MonoBehaviour
     {
+        #region FIELDS AND PROPERTIES
         public static event Action<int> OnShipDestroyed;
+        public static event Action<int> OnShipUndone;
 
         [SerializeField] SO_ShipData _shipData;
         GameObject _noGoZone;
@@ -18,10 +20,12 @@ namespace Battleship
         public int ShipID => _shipID;
         public GameObject Zone => _noGoZone;
         public bool ShipDestroyed => _isDestroyed;
+        #endregion
 
         private void OnEnable()
         {
             Tile.OnTileHit += HandleHit;
+            Tile.OnTileUndone += UndoHit;
         }
 
         private void Start()
@@ -48,12 +52,10 @@ namespace Battleship
             if (_shipID != id || _isDestroyed)
                 return;
 
-            Debug.Log($"Ship with ID {_shipID} reacted to tile's event.");
             _hits++;
 
             if (_hits == _shipData.ShipLength)
             {
-                Debug.Log($"Ship {_shipID} destroyed!");
                 OnShipDestroyed?.Invoke(_shipID);
                 _isDestroyed = true;
 
@@ -62,11 +64,30 @@ namespace Battleship
             }
         }
 
+        void UndoHit(int id)
+        {
+            if (_shipID != id)
+                return;
+
+            _hits--;
+
+            if (_isDestroyed)
+            {
+                OnShipUndone?.Invoke(_shipID);
+
+                foreach (Transform child in transform)
+                    child.gameObject.SetActive(false);
+
+                _isDestroyed = false;
+            }
+        }
+
         private void OnDisable()
         {
             _hits = 0;
             _isDestroyed = false;
             Tile.OnTileHit -= HandleHit;
+            Tile.OnTileUndone -= UndoHit;
         }
 
     }

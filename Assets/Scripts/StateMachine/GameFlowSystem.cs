@@ -15,11 +15,13 @@ namespace Battleship
         
         [SerializeField] Player[] _players = new Player[2];
         [SerializeField] GameUI _ui;
+        [SerializeField] ReplaySystem _replaySystem;
                 
         public Player[] Players => _players;
         public int CurrentPlayer => _currentPlayer;
         public int CurrentOpponent => _currentOpponent;
         public GameUI UI => _ui;
+        public ReplaySystem ReplaySystem => _replaySystem;
 #endregion
         
         private void Awake()

@@ -10,9 +10,7 @@ namespace Battleship
         [SerializeField] int _boardSizeX = 10, _boardSizeZ = 10;
 
         List<GameObject> _tileList = new List<GameObject>();
-
-        public int BoardSizeX => _boardSizeX;
-        public int BoardSizeZ => _boardSizeZ;
+        public List<GameObject> TileList => _tileList;
 
         #region GENERATE_IN_EDITOR
         private void OnDrawGizmos()
@@ -33,9 +31,6 @@ namespace Battleship
                     Vector3 tilePos = new Vector3(transform.position.x + i, 0, transform.position.z + j);
                     GameObject tile = Instantiate(_tilePrefab, tilePos, Quaternion.identity, transform);
                     tile.name = $"Tile: x {i}, z {j}";
-
-                    Tile tileInfo = tile.GetComponent<Tile>();
-
                     _tileList.Add(tile); 
                 }
             }

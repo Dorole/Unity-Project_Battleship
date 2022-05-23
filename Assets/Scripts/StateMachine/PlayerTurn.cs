@@ -55,8 +55,6 @@ namespace Battleship
             
             yield return new WaitForSeconds(1f);
 
-            HideUndestroyedShips();
-
             if (WinCheck())
             {
                 OnWin?.Invoke();
@@ -66,6 +64,7 @@ namespace Battleship
                 yield break;
             }
 
+            HideUndestroyedShips();
             GameManager.SetState(new Prepare(GameManager));
         }
 

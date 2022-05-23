@@ -6,6 +6,7 @@ namespace Battleship
     public class Tile : MonoBehaviour
     {
         public static event Action<int> OnTileHit;
+        public static event Action<int> OnTileUndone;
 
         [SerializeField] SO_TileData _tileData;
         [SerializeField] SpriteRenderer _sprite;
@@ -13,9 +14,6 @@ namespace Battleship
         int _tileID; 
         MeshRenderer _mesh;
         bool _tileChecked;
-
-        //public int XPos { get; set; }
-        //public int ZPos { get; set; }
 
         private void Start()
         {
@@ -63,7 +61,7 @@ namespace Battleship
                 GameFlowSystem.Instance.TurnEnded = true;
             }
 
-            RecordPlayedTilePosition();
+            RecordPlayedTile();
             _tileChecked = true;
         }    
 
@@ -73,10 +71,30 @@ namespace Battleship
             _tileChecked = true;
         }
 
-        void RecordPlayedTilePosition()
+        #region REPLAY RELATED
+        void RecordPlayedTile()
         {
-            FindObjectOfType<ReplaySystem>().AddToTileList(transform.position);
+            FindObjectOfType<ReplaySystem>().AddToTileList(this);
         }
+
+        public void ReplayTile()
+        {
+            CheckForHit();
+        }
+
+        public void UndoTile()
+        {
+            _tileChecked = false;
+            _mesh.material = _tileData.DefaultMaterial;
+            OnTileUndone?.Invoke(_tileID);
+        }
+
+        public void UnmarkTile()
+        {
+            _mesh.material = _tileData.DefaultMaterial;
+            _tileChecked = false;
+        }
+        #endregion
 
         private void OnDisable()
         {

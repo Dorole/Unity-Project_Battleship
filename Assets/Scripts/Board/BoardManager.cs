@@ -16,6 +16,7 @@ namespace Battleship
         private void OnEnable()
         {
             ShipPlacer.OnAllShipsPlaced += HideShipsAndZones;
+            Replay.OnReplaySet += HideShipsAndZones;
         }
 
         private void Start()
@@ -61,6 +62,7 @@ namespace Battleship
         private void OnDisable()
         {
             ShipPlacer.OnAllShipsPlaced -= HideShipsAndZones;
+            Replay.OnReplaySet -= HideShipsAndZones;
         }
 
     }

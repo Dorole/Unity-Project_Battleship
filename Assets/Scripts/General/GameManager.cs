@@ -11,11 +11,15 @@ namespace Battleship
 
         [SerializeField] ShipPlacer _shipPlacer;
         [SerializeField] GameUI _gameUI;
+        [SerializeField] GameObject _clickBlocker;
 
         private void Awake()
         {
             if (!_shipPlacer)
                 _shipPlacer = FindObjectOfType<ShipPlacer>();
+
+            if (_clickBlocker.activeSelf)
+                _clickBlocker.SetActive(false);
         }
 
         private void Start()
@@ -47,5 +51,11 @@ namespace Battleship
             yield return new WaitForSeconds(2);
             _gameUI.FadeImage();
         }
+
+        public void DisableClicks()
+        {
+            _clickBlocker.SetActive(true);
+        }
+
     }
 }

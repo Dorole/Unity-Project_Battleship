@@ -13,6 +13,11 @@ namespace Battleship
             _anim = GetComponent<Animator>();
         }
 
+        public void Enable()
+        {
+            _anim.SetTrigger("Enable");
+        }
+
         public void FadeOut()
         {
             _anim.SetTrigger("FadeOut");

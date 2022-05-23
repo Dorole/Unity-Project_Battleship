@@ -150,8 +150,6 @@ namespace Battleship
 
                 if (Physics.Raycast(ray, out hit, 10f))
                 {
-                    Debug.Log(hit.collider.gameObject.name);
-
                     if (hit.collider.gameObject.GetComponent<Tile>())
                         hit.collider.GetComponent<Tile>().GetShipOnTile(ship);
                     else
