@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace Battleship
 {
-    public class ReplayRecord 
+    public class RecordState : MonoBehaviour
     {
-        public Vector3 position;
-        public Quaternion rotation;
+
     }
 }

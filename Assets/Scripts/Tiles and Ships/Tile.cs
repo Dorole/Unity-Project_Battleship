@@ -14,8 +14,8 @@ namespace Battleship
         MeshRenderer _mesh;
         bool _tileChecked;
 
-        public int XPos { get; set; }
-        public int ZPos { get; set; }
+        //public int XPos { get; set; }
+        //public int ZPos { get; set; }
 
         private void Start()
         {
@@ -63,6 +63,7 @@ namespace Battleship
                 GameFlowSystem.Instance.TurnEnded = true;
             }
 
+            RecordPlayedTilePosition();
             _tileChecked = true;
         }    
 
@@ -70,6 +71,17 @@ namespace Battleship
         {
             _mesh.material = _tileData.MissedMaterial;
             _tileChecked = true;
+        }
+
+        void RecordPlayedTilePosition()
+        {
+            FindObjectOfType<ReplaySystem>().AddToTileList(transform.position);
+        }
+
+        private void OnDisable()
+        {
+            _tileChecked = false;
+            _mesh.material = _tileData.DefaultMaterial;
         }
     }
 }

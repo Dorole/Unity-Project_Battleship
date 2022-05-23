@@ -6,7 +6,7 @@ namespace Battleship
     {
         int _zoneID;
 
-        private void Start()
+        private void OnEnable()
         {
             Ship.OnShipDestroyed += MarkZone;
         }
@@ -37,6 +37,11 @@ namespace Battleship
             }
 
             gameObject.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            Ship.OnShipDestroyed -= MarkZone;
         }
     }
 }

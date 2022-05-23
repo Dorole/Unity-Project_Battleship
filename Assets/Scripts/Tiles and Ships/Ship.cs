@@ -19,10 +19,14 @@ namespace Battleship
         public GameObject Zone => _noGoZone;
         public bool ShipDestroyed => _isDestroyed;
 
+        private void OnEnable()
+        {
+            Tile.OnTileHit += HandleHit;
+        }
+
         private void Start()
         {
             DefineZone();
-            Tile.OnTileHit += HandleHit;
         }
 
         void DefineZone()
@@ -41,7 +45,7 @@ namespace Battleship
 
         public void HandleHit(int id)
         {
-            if (_shipID != id)
+            if (_shipID != id || _isDestroyed)
                 return;
 
             Debug.Log($"Ship with ID {_shipID} reacted to tile's event.");
@@ -55,9 +59,14 @@ namespace Battleship
 
                 foreach (Transform child in transform)
                     child.gameObject.SetActive(true);
-
-                Tile.OnTileHit -= HandleHit;
             }
+        }
+
+        private void OnDisable()
+        {
+            _hits = 0;
+            _isDestroyed = false;
+            Tile.OnTileHit -= HandleHit;
         }
 
     }
