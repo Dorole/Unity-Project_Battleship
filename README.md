@@ -1,5 +1,7 @@
 # ✷✷✷ BATTLESHIP - UNITY 3D ✷✷✷
 
+[Try playing the game here.](https://ddorothy.itch.io/battleship "Battleship")
+
 ### Description
 A classic two-player Battleship game. The game is played locally (hot seat). <br>
 ***
